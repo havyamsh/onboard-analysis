@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onboarding Drop-off Analyzer</title>
+    <link rel="stylesheet" href="static/css/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-brand">
+                    <i class="fas fa-chart-bar nav-icon"></i>
+                    <h1 class="nav-title">Onboarding Analyzer</h1>
+                </div>
+                
+                <div class="nav-links">
+                    <button class="nav-btn active" data-view="home">
+                        <i class="fas fa-home"></i>
+                        Home
+                    </button>
+                    <button class="nav-btn" data-view="simulator">
+                        <i class="fas fa-play-circle"></i>
+                        Simulator
+                    </button>
+                    <button class="nav-btn" data-view="analytics">
+                        <i class="fas fa-chart-line"></i>
+                        Analytics
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Home View -->
+            <div id="home-view" class="view active">
+                <div class="hero-section">
+                    <h2 class="hero-title">Understand User Drop-offs</h2>
+                    <p class="hero-subtitle">
+                        Analyze your onboarding funnel, identify friction points, and get AI-powered insights to improve user conversion rates.
+                    </p>
+                    
+                    <div class="hero-actions">
+                        <button class="btn btn-primary" data-action="start-simulation">
+                            <i class="fas fa-play-circle"></i>
+                            Start Simulation
+                        </button>
+                        <button class="btn btn-secondary" data-action="view-analytics">
+                            <i class="fas fa-chart-line"></i>
+                            View Analytics
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-content">
+                            <i class="fas fa-users stat-icon blue"></i>
+                            <div class="stat-info">
+                                <h3>Total Sessions</h3>
+                                <p class="stat-value blue" id="total-sessions">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-content">
+                            <i class="fas fa-trending-down stat-icon red"></i>
+                            <div class="stat-info">
+                                <h3>Drop-offs</h3>
+                                <p class="stat-value red" id="total-dropoffs">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-content">
+                            <i class="fas fa-brain stat-icon green"></i>
+                            <div class="stat-info">
+                                <h3>AI Insights</h3>
+                                <p class="stat-value green" id="total-insights">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <button class="btn btn-gradient" id="generate-insights" disabled>
+                        <i class="fas fa-brain"></i>
+                        Generate AI Insights
+                    </button>
+                    
+                    <button class="btn btn-danger" id="reset-data">
+                        <i class="fas fa-redo"></i>
+                        Reset Data
+                    </button>
+                </div>
+
+                <!-- AI Insights Display -->
+                <div id="insights-container" class="insights-container hidden">
+                    <div class="insights-header">
+                        <i class="fas fa-brain"></i>
+                        <h3>AI-Powered Insights</h3>
+                        <p>Intelligent analysis of your onboarding funnel</p>
+                    </div>
+                    <div id="insights-list" class="insights-list"></div>
+                </div>
+            </div>
+
+            <!-- Simulator View -->
+            <div id="simulator-view" class="view">
+                <div class="simulator-container">
+                    <div class="simulator-header">
+                        <h2>Onboarding Simulation</h2>
+                        <p>Simulate user journeys through the onboarding process</p>
+                        <p class="user-id">User ID: <span id="current-user-id"></span></p>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                    </div>
+
+                    <!-- Steps Overview -->
+                    <div class="steps-overview" id="steps-overview">
+                        <!-- Steps will be dynamically generated -->
+                    </div>
+
+                    <!-- Current Step Card -->
+                    <div class="step-card" id="step-card">
+                        <!-- Current step content will be dynamically generated -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics View -->
+            <div id="analytics-view" class="view">
+                <div class="analytics-container">
+                    <div class="analytics-header">
+                        <h2>Analytics Dashboard</h2>
+                        <p>Analyze user behavior and identify optimization opportunities</p>
+                    </div>
+
+                    <!-- Key Metrics -->
+                    <div class="metrics-grid">
+                        <div class="metric-card blue">
+                            <i class="fas fa-users"></i>
+                            <div>
+                                <h3>Total Sessions</h3>
+                                <p id="analytics-total-sessions">0</p>
+                            </div>
+                        </div>
+
+                        <div class="metric-card green">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <h3>Completion Rate</h3>
+                                <p id="analytics-completion-rate">0%</p>
+                            </div>
+                        </div>
+
+                        <div class="metric-card red">
+                            <i class="fas fa-times-circle"></i>
+                            <div>
+                                <h3>Most Common Drop-off</h3>
+                                <p id="analytics-common-dropoff">Step 1</p>
+                            </div>
+                        </div>
+
+                        <div class="metric-card purple">
+                            <i class="fas fa-brain"></i>
+                            <div>
+                                <h3>AI Insights</h3>
+                                <p id="analytics-insights-count">0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts -->
+                    <div class="charts-grid">
+                        <div class="chart-container">
+                            <h3>Step Completion Rates</h3>
+                            <div id="completion-chart" class="chart"></div>
+                        </div>
+
+                        <div class="chart-container">
+                            <h3>Drop-off Analysis</h3>
+                            <div id="dropoff-chart" class="chart"></div>
+                        </div>
+                    </div>
+
+                    <!-- AI Analysis Button -->
+                    <div class="analysis-actions">
+                        <button class="btn btn-gradient" id="analytics-generate-insights">
+                            <i class="fas fa-brain"></i>
+                            Generate AI Insights
+                        </button>
+                    </div>
+
+                    <!-- Analytics Insights -->
+                    <div id="analytics-insights" class="insights-container hidden">
+                        <div class="insights-header">
+                            <i class="fas fa-brain"></i>
+                            <h3>AI-Powered Insights</h3>
+                            <p>Intelligent analysis of your onboarding funnel</p>
+                        </div>
+                        <div id="analytics-insights-list" class="insights-list"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Loading Overlay -->
+        <div id="loading-overlay" class="loading-overlay hidden">
+            <div class="loading-content">
+                <div class="spinner"></div>
+                <p>Analyzing data...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="static/js/app.js"></script>
+</body>
+</html>
